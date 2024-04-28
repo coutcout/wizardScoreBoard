@@ -1,0 +1,31 @@
+{
+    "name": "Angular",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "VARIANT": "latest"
+        }
+    },
+    "postCreateCommand": "npm i",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "bash",
+                        "icon": "terminal-bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "extensions.ignoreRecommendations": true,
+                "gitlens.showWelcomeOnInstall": false,
+                "gitlens.showWhatsNewAfterUpgrades": false,
+            },
+            "extensions": [
+                "MS-CEINTL.vscode-language-pack-fr",
+                "bierner.markdown-mermaid",
+                "bpruitt-goddard.mermaid-markdown-syntax-highlighting"
+            ]
+        }
+    }
+}
