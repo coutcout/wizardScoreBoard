@@ -1,10 +1,7 @@
 {
     "name": "Angular",
     "build": {
-        "dockerfile": "Dockerfile",
-        "args": {
-            "VARIANT": "latest"
-        }
+        "dockerfile": "Dockerfile"
     },
     "postCreateCommand": "npm i",
     "customizations": {
