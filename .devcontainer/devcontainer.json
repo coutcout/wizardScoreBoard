@@ -3,6 +3,10 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
+    "forwardPorts": [
+        4200,
+        9876
+    ],
     "postCreateCommand": "npm i",
     "customizations": {
         "vscode": {
