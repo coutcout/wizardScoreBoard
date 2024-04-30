@@ -31,7 +31,7 @@ jobs:
       with:
         name: coverage-results
         path: |
-          ./coverage/wizart-score-board/
+          ./coverage/wizard-score-board/
 
     - name: Test angular action
       uses:  demyanets/angular-coverage-badges-action@v1
@@ -41,5 +41,5 @@ jobs:
 
     - name: Quality Build Control
       run: |
-        coverage = `cat ./coveragee/wizart-score-board/coverage-summary.json`
-        
+        coverage = `cat ./coveragee/wizard-score-board/coverage-summary.json`
+
