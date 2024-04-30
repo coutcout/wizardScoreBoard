@@ -32,3 +32,4 @@ jobs:
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
         coverage-summary-path: ./coverage/wizard-score-board/coverage-summary.json
+        github_token: ${{ secrets.GITHUB_TOKEN }}
