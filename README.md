@@ -1,6 +1,13 @@
 # Wizard Scoreboard
 A score board for the wizard card game
 
+![image](./badges/wizard-score-board/coverage.svg)
+![image](./badges/wizard-score-board/coverage-branches.svg)
+![image](./badges/wizard-score-board/coverage-functions.svg)
+![image](./badges/wizard-score-board/coverage-lines.svg)
+![image](./badges/wizard-score-board/coverage-statements.svg)
+
+
 ## Rules
 
 * Distribute 1 card to each player
