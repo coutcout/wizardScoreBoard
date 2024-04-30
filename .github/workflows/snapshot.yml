@@ -49,11 +49,11 @@ jobs:
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
         echo "$content"
-        echo "name=coverage::$content" >> $GITHUB_OUTPUT
+        echo "coverage=$content" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
-        echo "${steps.set_coverage_var.outputs.coverage}"
-        echo "${fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}"
+        echo "${{steps.set_coverage_var.outputs.coverage}}"
+        echo "${{fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}}"
 
 
