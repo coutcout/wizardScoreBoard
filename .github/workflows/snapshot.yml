@@ -51,6 +51,7 @@ jobs:
         echo "::set-output name=coverage::$content"
 
     - name: Quality Build Control
-      run: echo "${{fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}}"
+      run: |
+        echo "${{fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}}"
 
 
