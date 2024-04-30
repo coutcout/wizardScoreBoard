@@ -29,8 +29,11 @@ module.exports = function (config) {
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
-      ]
+        { type: 'text-summary' },
+        { type: 'json-summary' },
+        { type: 'lcovonly'}
+      ],
+      fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml'],
     browsers: ['Chrome', 'ChromeHeadless'],
