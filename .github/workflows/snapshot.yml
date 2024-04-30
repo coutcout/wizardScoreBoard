@@ -32,6 +32,7 @@ jobs:
         name: coverage-results
         path: |
           ./coverage/wizard-score-board/
+        retention-days: 2
 
     - name: Test angular action
       uses:  demyanets/angular-coverage-badges-action@v1
@@ -41,7 +42,7 @@ jobs:
 
     - id: set_coverage_var
       run: |
-        coverage=`cat ./coveragee/wizard-score-board/coverage-summary.json`
+        coverage=`cat ./coverage/wizard-score-board/coverage-summary.json`
         # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
