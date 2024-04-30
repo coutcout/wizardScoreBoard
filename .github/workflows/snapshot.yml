@@ -42,18 +42,17 @@ jobs:
 
     - id: set_coverage_var
       run: |
+        cat ./coverage/wizard-score-board/coverage-summary.json
         coverage=`cat ./coverage/wizard-score-board/coverage-summary.json`
         # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
-        echo "$content"
         echo "coverage=$content" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
-        echo "${{steps.set_coverage_var.outputs.coverage}}"
         echo "${{fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}}"
 
 
