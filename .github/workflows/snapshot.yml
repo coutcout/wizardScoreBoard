@@ -26,10 +26,20 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run testCI
-    - run: ls -al
+    - name: Publish coverage results
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-results
+        path: |
+          ./coverage/wizart-score-board/
 
     - name: Test angular action
       uses:  demyanets/angular-coverage-badges-action@v1
       with:
         coverage-summary-path: ./coverage/wizard-score-board/coverage-summary.json
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Quality Build Control
+      run: |
+        coverage = `cat ./coveragee/wizart-score-board/coverage-summary.json`
+        
