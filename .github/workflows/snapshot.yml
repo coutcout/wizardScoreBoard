@@ -48,7 +48,8 @@ jobs:
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
-        echo "::set-output name=coverage::$content"
+        echo "$content"
+        echo "name=coverage::$content" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
