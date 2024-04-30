@@ -52,6 +52,7 @@ jobs:
 
     - name: Quality Build Control
       run: |
-        echo "hello"
+        echo "${{steps.set_coverage_var.outputs.coverage}}"
+        echo "${{fromJson(steps.set_coverage_var.outputs.coverage).total.lines.total}}"
 
 
