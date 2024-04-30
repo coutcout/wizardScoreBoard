@@ -26,6 +26,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run testCI
+    - run: ls -al
 
     - name: Test angular action
       uses:  demyanets/angular-coverage-badges-action@v1
