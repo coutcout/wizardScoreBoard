@@ -46,7 +46,7 @@ jobs:
 
     - name: Quality Build Control Failed
       env:
-        QUALITY_PCT: 110
+        QUALITY_PCT: 80
       if: ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct }} < env.QUALITY_PCT && ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.branches }} < env.QUALITY_PCT
       run: exit 1
 
