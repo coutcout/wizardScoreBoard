@@ -48,8 +48,7 @@ jobs:
       env:
         QUALITY_PCT: 80
       if: | 
-        ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < env.QUALITY_PCT }}
-        ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.branches.pct < env.QUALITY_PCT }}
+        ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < env.QUALITY_PCT && fromJSON(steps.set_coverage_var.outputs.coverage).total.branches.pct < env.QUALITY_PCT }}
       run: exit 1
 
 
