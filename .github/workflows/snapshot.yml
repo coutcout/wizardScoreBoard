@@ -41,9 +41,8 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - id: set_coverage_var
-      uses: ActionsTools/read-json-action@main
-      with:
-        file_path: "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)" >> $GITHUB_OUTPUT
+      run: |
+        "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
