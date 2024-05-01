@@ -43,11 +43,9 @@ jobs:
     - id: set_coverage_var
       run: |
         echo "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)'" >> $GITHUB_OUTPUT
-        
+
     - name: Quality Build Control Failed
-      env: 
-        COVERAGE: ${{fromJSON(steps.set_coverage_var.outputs.coverage)}}
-      if: ${{ env.COVERAGE.total.lines.pct < 90 && env.COVERAGE.total.branches < 90}}
+      if: ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < 90 && fromJSON(steps.set_coverage_var.outputs.coverage).total.branches < 90}}
       run: exit 1
 
 
