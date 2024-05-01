@@ -42,7 +42,7 @@ jobs:
 
     - id: set_coverage_var
       run: |
-        "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)" >> $GITHUB_OUTPUT
+        echo "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)'" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
