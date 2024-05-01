@@ -41,16 +41,9 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - id: set_coverage_var
-      run: |
-        cat ./coverage/wizard-score-board/coverage-summary.json
-        coverage=`cat ./coverage/wizard-score-board/coverage-summary.json`
-        # the following lines are only required for multi line json
-        content="${content//'%'/'%25'}"
-        content="${content//$'\n'/'%0A'}"
-        content="${content//$'\r'/'%0D'}"
-        # end of optional handling for multi line json
-        $content
-        echo "coverage=$content" >> $GITHUB_OUTPUT
+      uses: ActionsTools/read-json-action@main
+      with:
+        file_path: "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)" >> $GITHUB_OUTPUT
 
     - name: Quality Build Control
       run: |
