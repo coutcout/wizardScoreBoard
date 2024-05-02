@@ -1,6 +1,8 @@
 # Wizard Scoreboard
 A score board for the wizard card game
 
+[![codecov](https://codecov.io/gh/coutcout/wizardScoreBoard/graph/badge.svg?token=3T0VNVOD9M)](https://codecov.io/gh/coutcout/wizardScoreBoard)
+
 ## Rules
 
 * Distribute 1 card to each player
