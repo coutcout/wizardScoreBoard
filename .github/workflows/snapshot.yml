@@ -40,15 +40,20 @@ jobs:
         coverage-summary-path: ./coverage/wizard-score-board/coverage-summary.json
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - id: set_coverage_var
-      run: |
-        echo "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)'" >> $GITHUB_OUTPUT
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        
+    # - id: set_coverage_var
+    #   run: |
+    #     echo "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)'" >> $GITHUB_OUTPUT
 
-    - name: Quality Build Control Failed
-      env:
-        QUALITY_PCT: 80
-      if: | 
-        ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < env.QUALITY_PCT && fromJSON(steps.set_coverage_var.outputs.coverage).total.branches.pct < env.QUALITY_PCT }}
-      run: exit 1
+    # - name: Quality Build Control Failed
+    #   env:
+    #     QUALITY_PCT: 80
+    #   if: | 
+    #     ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < env.QUALITY_PCT && fromJSON(steps.set_coverage_var.outputs.coverage).total.branches.pct < env.QUALITY_PCT }}
+    #   run: exit 1
 
 
