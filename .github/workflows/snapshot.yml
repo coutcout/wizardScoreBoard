@@ -43,27 +43,3 @@ jobs:
       uses: codecov/codecov-action@v4.0.1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-
-    # - id: set_coverage_var
-    #   run: |
-    #     echo "coverage=$(jq -c . < ./coverage/wizard-score-board/coverage-summary.json)'" >> $GITHUB_OUTPUT
-
-    # - name: Quality Build Control Failed
-    #   env:
-    #     QUALITY_PCT: 80
-    #   if: | 
-    #     ${{ fromJSON(steps.set_coverage_var.outputs.coverage).total.lines.pct < env.QUALITY_PCT && fromJSON(steps.set_coverage_var.outputs.coverage).total.branches.pct < env.QUALITY_PCT }}
-    #   run: exit 1
-
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        # Disabling shallow clone is recommended for improving relevancy of reporting
-        fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
