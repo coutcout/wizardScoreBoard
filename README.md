@@ -2,6 +2,8 @@
 A score board for the wizard card game
 
 [![codecov](https://codecov.io/gh/coutcout/wizardScoreBoard/graph/badge.svg?token=3T0VNVOD9M)](https://codecov.io/gh/coutcout/wizardScoreBoard)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=coutcout_wizardScoreBoard&metric=bugs)](https://sonarcloud.io/summary/new_code?id=coutcout_wizardScoreBoard)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=coutcout_wizardScoreBoard&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=coutcout_wizardScoreBoard)
 
 ## Rules
 
