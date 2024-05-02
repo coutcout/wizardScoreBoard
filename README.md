@@ -1,12 +1,7 @@
 # Wizard Scoreboard
 A score board for the wizard card game
 
-![image](./badges/wizard-score-board/coverage.svg)
-![image](./badges/wizard-score-board/coverage-branches.svg)
-![image](./badges/wizard-score-board/coverage-functions.svg)
-![image](./badges/wizard-score-board/coverage-lines.svg)
-![image](./badges/wizard-score-board/coverage-statements.svg)
-
+[![codecov](https://codecov.io/gh/coutcout/wizardScoreBoard/graph/badge.svg?token=3T0VNVOD9M)](https://codecov.io/gh/coutcout/wizardScoreBoard)
 
 ## Rules
 
