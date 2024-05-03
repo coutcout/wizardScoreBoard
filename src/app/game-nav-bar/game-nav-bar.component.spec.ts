@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GameNavBarComponent } from './game-nav-bar.component';
 import { By } from '@angular/platform-browser';
 import { GameManagerService } from '../game-manager.service';
-import { Game } from '../game';
 
 describe('GameNavBarComponent', () => {
   let component: GameNavBarComponent;

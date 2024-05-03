@@ -14,10 +14,6 @@ import { GameNavBarComponent } from './game-nav-bar/game-nav-bar.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit{
-  
-  
-  ngOnInit(): void {
-  }
+export class AppComponent{
   
 }
