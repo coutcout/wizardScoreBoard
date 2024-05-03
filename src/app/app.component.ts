@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleComponent } from './title/title.component';
 import { GameNavBarComponent } from './game-nav-bar/game-nav-bar.component';
