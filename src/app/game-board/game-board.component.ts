@@ -17,7 +17,6 @@ export class GameBoardComponent implements OnInit, OnDestroy{
   constructor(private gameManagerService: GameManagerService){}
   
   ngOnInit(): void {
-    console.log("init");
     this.gameSubscription = this.gameManagerService.getCurrentGame().subscribe(g => this.game = g);
   }
   
