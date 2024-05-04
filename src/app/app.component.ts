@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleComponent } from './title/title.component';
 import { GameNavBarComponent } from './game-nav-bar/game-nav-bar.component';
+import { GameBoardComponent } from './game-board/game-board.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,8 @@ import { GameNavBarComponent } from './game-nav-bar/game-nav-bar.component';
   imports: [
     RouterOutlet, 
     TitleComponent,
-    GameNavBarComponent
+    GameNavBarComponent,
+    GameBoardComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
