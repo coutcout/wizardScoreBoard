@@ -14,6 +14,7 @@ describe('TitleComponent', () => {
     
     fixture = TestBed.createComponent(TitleComponent);
     component = fixture.componentInstance;
+    component.title = "Wizard Score Board"
     fixture.detectChanges();
   });
 

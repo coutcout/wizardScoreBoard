@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { By } from '@angular/platform-browser';
+import { By, Title } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   let fixture : ComponentFixture<AppComponent>;
@@ -9,6 +9,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [Title]
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     app = fixture.componentInstance;
@@ -35,6 +36,11 @@ describe('AppComponent', () => {
     const { debugElement } = fixture
     const gameBoardComponent = debugElement.query(By.css('app-game-board'));
     expect(gameBoardComponent).not.toBeNull();
+  });
+
+  it('should have title "Wizard Score Board"', () => {
+    let titleService = TestBed.inject(Title);
+    expect(titleService.getTitle()).toEqual(app.title);
   });
 
 });

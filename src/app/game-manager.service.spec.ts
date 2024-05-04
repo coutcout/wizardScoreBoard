@@ -57,7 +57,7 @@ describe('GameManagerService', () => {
   
       // Act
       service.startNewGame();
-      //tick();
+      tick();
   
       // Assert
       expect(game).not.toBeNull();
