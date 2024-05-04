@@ -36,4 +36,5 @@ describe('AppComponent', () => {
     const gameBoardComponent = debugElement.query(By.css('app-game-board'));
     expect(gameBoardComponent).not.toBeNull();
   });
+
 });

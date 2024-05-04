@@ -7,16 +7,16 @@ import { GameManagerService } from '../game-manager.service';
 describe('GameNavBarComponent', () => {
   let component: GameNavBarComponent;
   let fixture: ComponentFixture<GameNavBarComponent>;
-  let gameManagerService: GameManagerService;
+  let mockGameManagerService: GameManagerService;
 
   beforeEach(async () => {
 
-    gameManagerService = new GameManagerService();
+    mockGameManagerService = jasmine.createSpyObj('GameManagerService', ['startNewGame']);
 
     await TestBed.configureTestingModule({
       imports: [GameNavBarComponent],
       providers: [
-        {provide: GameManagerService, useValue: gameManagerService}
+        {provide: GameManagerService, useValue: mockGameManagerService}
       ]
     })
     .compileComponents();
@@ -41,11 +41,11 @@ describe('GameNavBarComponent', () => {
     // Arrange
     const { debugElement } = fixture;
     const button = debugElement.query(By.css("#gameNavBar button:nth-child(1)"));
-    const oldGame = gameManagerService.currGame;
+    
     // Act
     button.nativeElement.click();
 
     // Assert
-    expect(gameManagerService.currGame).not.toEqual(oldGame);
+    expect(mockGameManagerService.startNewGame).toHaveBeenCalledTimes(1);
   })
 });
