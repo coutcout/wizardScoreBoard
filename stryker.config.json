@@ -1,0 +1,5 @@
+{
+    "checkers":["typescript"],
+    "testRunner": "karma",
+    "ignorers": ["angular"]
+}
