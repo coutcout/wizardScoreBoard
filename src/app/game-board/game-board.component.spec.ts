@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameBoardComponent } from './game-board.component';
-import { GameManagerService } from '../game-manager.service';
+import { By } from '@angular/platform-browser';
 import { Observable, Subscription } from 'rxjs';
-import { Game } from '../game';
+import { Game, GameStatus } from '../game';
+import { GameManagerService } from '../game-manager.service';
+import { GameBoardComponent } from './game-board.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('GameBoardComponent', () => {
   let component: GameBoardComponent;
@@ -11,7 +13,7 @@ describe('GameBoardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GameBoardComponent],
+      imports: [GameBoardComponent, HttpClientTestingModule],
       providers: [
         GameManagerService
       ]
@@ -54,4 +56,39 @@ describe('GameBoardComponent', () => {
       expect(gameSubscription.unsubscribe).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('PlayerSelector', () => {
+    it('should have the player selector component when game is in player status', () => {
+      // Arrange
+      let { debugElement } = fixture;
+      component.game = new Game();
+      
+      // Act
+      fixture.detectChanges();
+      
+      // Assert
+      let playerSelector = debugElement.query(By.css('app-player-selector'));
+      expect(playerSelector).not.toBeNull();
+    });
+
+    [
+      GameStatus.Running,
+      GameStatus.Ended
+    ]
+    .forEach(status => {
+      it(`should not have the player selector component when game is ${GameStatus[status]} status`, () => {
+        // Arrange
+        let { debugElement } = fixture;
+        component.game = new Game();
+        component.game.status = status;
+        
+        // Act
+        fixture.detectChanges();
+        
+        // Assert
+        let playerSelector = debugElement.query(By.css('app-player-selector'));
+        expect(playerSelector).toBeNull();
+      });
+    })
+  })
 });
