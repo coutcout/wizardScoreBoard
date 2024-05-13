@@ -9,6 +9,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController
 } from '@angular/common/http/testing';
+import { Player } from '../player';
 
 describe('PlayerSelectorComponent', () => {
   const fakeSvg = `<svg><path id="someId" name="someSvg"></path></svg>`;
@@ -107,7 +108,7 @@ describe('PlayerSelectorComponent', () => {
     });
 
     describe("Remove button", () => {
-      fit("should remove the player line when clicked", async(() => {
+      it("should remove the player line when clicked", async(() => {
         // Arrange
         let {debugElement} = fixture;
         
@@ -178,6 +179,62 @@ describe('PlayerSelectorComponent', () => {
         expect(iconAttribute).toBeTruthy();
         expect(iconAttribute).toEqual('remove');
         httpTestingController.expectOne("/assets/svg/icons/remove.svg");
+      });
+    });
+  });
+
+  describe("Validate Button", () => {
+    it("should have an active validate button when at least 2 player are corrects", () => {
+      // Arrange
+      component.players = [
+        {id:"1",nickname:"a"},
+        {id:"2",nickname:"b"},
+      ];
+      
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let validateButton = debugElement.query(By.css("button.validate"));
+
+      expect(validateButton).toBeTruthy();
+      expect(validateButton.nativeElement.disabled).toBeFalse();
+    });
+
+    const parsePlayer = (player: any) => {
+      let p : Player = new Player();
+      return Object.assign(p, player);
+    };
+
+    [
+      [
+        {id:"1",nickname:" "},
+        {id:"2",nickname:" "},
+        {id:"3",nickname:" "},
+      ],
+      [
+        {id:"1",nickname:"a"},
+        {id:"2",nickname:""},
+      ],
+      [
+        {id:"1",nickname:"a"},
+      ],
+      [],
+    ].forEach(playerList => {
+      it(`should not have a disabled validate button with ${playerList.map(p => parsePlayer(p))}`, () => {
+        // Arrange
+        component.players = playerList;
+        
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        let {debugElement} = fixture;
+        let validateButton = debugElement.query(By.css("button.validate"));
+  
+        expect(validateButton).toBeTruthy();
+        expect(validateButton.nativeElement.disabled).toBeTrue();
       });
     });
   });

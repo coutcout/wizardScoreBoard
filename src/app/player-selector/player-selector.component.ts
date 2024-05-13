@@ -50,4 +50,12 @@ export class PlayerSelectorComponent {
   trackByIndex(index: number, obj: any): any {
     return index;
   }
+
+  isPlayerListValide(): boolean {
+    return (this.players.filter(p => this.isPlayerValide(p))).length >= 2;
+  }
+
+  isPlayerValide(p: Player): boolean {
+    return !!p.nickname.trim(); 
+  }
 }

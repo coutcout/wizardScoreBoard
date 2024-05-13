@@ -8,4 +8,8 @@ export class Player {
         this.id = uuidv4();
         this.nickname = "";
     }
+
+    toString(): string {
+        return JSON.stringify(this);
+    }
 }
