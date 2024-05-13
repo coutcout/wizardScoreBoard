@@ -5,13 +5,15 @@ import { Subscription } from 'rxjs';
 import { PlayerSelectorComponent } from '../player-selector/player-selector.component';
 import { CommonModule } from '@angular/common';
 import { MatIconRegistry } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game-board',
   standalone: true,
   imports: [
     PlayerSelectorComponent,
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './game-board.component.html',
   styleUrl: './game-board.component.scss'

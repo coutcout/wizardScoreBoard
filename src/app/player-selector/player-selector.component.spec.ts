@@ -74,11 +74,26 @@ describe('PlayerSelectorComponent', () => {
 
     describe("Add button", () => {
       it("should have plus icon", () => {
+        let addPlayerButtonIconDebugElement: DebugElement = playerRow.query(By.css("mat-icon"));
+        let addPlayerButtonIcon : HTMLElement = addPlayerButtonIconDebugElement.nativeElement;
+        let iconAttribute = addPlayerButtonIcon.getAttribute('svgIcon');
+        expect(iconAttribute).toBeTruthy();
+        expect(iconAttribute).toEqual('plus');
+        httpTestingController.expectOne("/assets/svg/icons/plus.svg");
+      });
+
+      it("should add a new player line when clicked", () => {
         let addPlayerButtonDebugElement: DebugElement = playerRow.query(By.css("button.add"));
         let addPlayerButton : HTMLElement = addPlayerButtonDebugElement.nativeElement;
 
-        expect(addPlayerButton)
-        httpTestingController.expectOne("/assets/svg/icons/plus.svg");
+        // Act
+        addPlayerButton.click();
+        fixture.detectChanges();
+
+        // Assert
+        let {debugElement} = fixture;
+        let playerRows = debugElement.queryAll(By.css(".player-row"));
+        expect(playerRows).toHaveSize(2);
       });
     });
   });

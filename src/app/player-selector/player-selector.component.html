@@ -1,6 +1,6 @@
-<div class="player-row">
-    <input type="text" placeholder="Nickname"/>
-    <button mat-fab class="add">
+<div class="player-row" *ngFor="let player of players;let index = index;trackBy:trackByIndex;">
+    <input type="text" placeholder="Nickname" [(ngModel)]="players[index].nickname"/>
+    <button mat-fab class="add" (click)="addPlayer()">
         <mat-icon svgIcon="plus"></mat-icon>
     </button>
 </div>
