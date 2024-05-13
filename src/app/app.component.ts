@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TitleComponent } from './title/title.component';
 import { GameNavBarComponent } from './game-nav-bar/game-nav-bar.component';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,8 @@ import { Title } from '@angular/platform-browser';
     TitleComponent,
     GameNavBarComponent,
     GameBoardComponent,
-    CommonModule
+    CommonModule,
+    HttpClientModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -22,7 +24,9 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent{
   readonly title: string = "Wizard Score Board";
 
-  constructor(private titleService: Title){
+  constructor(
+    private titleService: Title,
+  ){
     this.titleService.setTitle(this.title);
   }
 }

@@ -1,0 +1,15 @@
+<div class="player-row" *ngFor="let player of players;let index = index;trackBy:trackByIndex;">
+    <input type="text" placeholder="Nickname" [(ngModel)]="players[index].nickname"/>
+    <button mat-fab class="add" (click)="addPlayer()" *ngIf="index === (players.length - 1)">
+        <mat-icon svgIcon="plus"></mat-icon>
+    </button>
+
+    <button mat-fab class="remove" (click)="removePlayer(player)" *ngIf="players.length !== 1">
+        <mat-icon svgIcon="remove"></mat-icon>
+    </button>
+</div>
+<button mat-fab extended class="validate" [disabled]="!isPlayerListValide()" (click)="validate()">
+    Validate
+</button>
+
+

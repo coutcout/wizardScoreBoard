@@ -1,16 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Game } from '../game';
+import { Game, GameStatus } from '../game';
 import { GameManagerService } from '../game-manager.service';
 import { Subscription } from 'rxjs';
+import { PlayerSelectorComponent } from '../player-selector/player-selector.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-game-board',
   standalone: true,
-  imports: [],
+  imports: [
+    PlayerSelectorComponent,
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './game-board.component.html',
   styleUrl: './game-board.component.scss'
 })
 export class GameBoardComponent implements OnInit, OnDestroy{
+  readonly GameStatus = GameStatus;
+
   game: Game | null = null;
   gameSubscription: Subscription | null = null;
 

@@ -8,12 +8,11 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 export class GameManagerService {
   private currGame$: Subject<Game> = new ReplaySubject(1);
   
-  constructor() { }
-
+  constructor() {}
+  
   startNewGame() {
     this.currGame$.next(new Game());
   }
   
   getCurrentGame(): Observable<Game> { return this.currGame$.asObservable() };
-
 }
