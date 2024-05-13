@@ -66,12 +66,6 @@ describe('PlayerSelectorComponent', () => {
       expect(nicknameInput.getAttribute("placeholder")).toBe("Nickname");
     });
 
-    it('should have a button to add a new player', () => {
-      let addPlayerButtonDebugElement = playerRow.query(By.css("button.add"));
-
-      expect(addPlayerButtonDebugElement).toBeTruthy();
-    });
-
     describe("Add button", () => {
       it("should have plus icon", () => {
         let addPlayerButtonIconDebugElement: DebugElement = playerRow.query(By.css("mat-icon"));
@@ -95,6 +89,21 @@ describe('PlayerSelectorComponent', () => {
         let playerRows = debugElement.queryAll(By.css(".player-row"));
         expect(playerRows).toHaveSize(2);
       });
+
+      
+    it('should be there if last player row', () => {
+      // Arrange
+      component.addPlayer();
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
+
+      expect(addPlayerButtonDebugElementList).toHaveSize(2);
+      expect(addPlayerButtonDebugElementList[0].query(By.css("button.add"))).not.toBeTruthy();
+      expect(addPlayerButtonDebugElementList[1].query(By.css("button.add"))).toBeTruthy();
+    });
     });
   });
 });
