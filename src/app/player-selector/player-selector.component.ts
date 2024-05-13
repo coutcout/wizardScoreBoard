@@ -28,8 +28,12 @@ export class PlayerSelectorComponent {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
-    const iconUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/svg/icons/plus.svg");
-    this.matIconRegistry.addSvgIcon("plus", iconUrl);
+    const iconPlusUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/svg/icons/plus.svg");
+    this.matIconRegistry.addSvgIcon("plus", iconPlusUrl);
+
+    const iconRemoveUrl = this.domSanitizer.bypassSecurityTrustResourceUrl("/assets/svg/icons/remove.svg");
+    this.matIconRegistry.addSvgIcon("remove", iconRemoveUrl);
+
     this.players = [
       new Player()
     ]
@@ -37,7 +41,10 @@ export class PlayerSelectorComponent {
 
   addPlayer(){
     this.players.push(new Player());
-    console.log(this.players);
+  }
+
+  removePlayer(player: Player){
+    this.players = this.players.filter(p => p !== player);
   }
 
   trackByIndex(index: number, obj: any): any {

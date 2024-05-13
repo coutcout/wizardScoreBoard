@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { PlayerSelectorComponent } from './player-selector.component';
 import { By } from '@angular/platform-browser';
@@ -91,19 +91,94 @@ describe('PlayerSelectorComponent', () => {
       });
 
       
-    it('should be there if last player row', () => {
-      // Arrange
-      component.addPlayer();
-      fixture.detectChanges();
+      it('should be there if last player row', () => {
+        // Arrange
+        component.addPlayer();
+        fixture.detectChanges();
 
-      // Assert
-      let {debugElement} = fixture;
-      let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
+        // Assert
+        let {debugElement} = fixture;
+        let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
 
-      expect(addPlayerButtonDebugElementList).toHaveSize(2);
-      expect(addPlayerButtonDebugElementList[0].query(By.css("button.add"))).not.toBeTruthy();
-      expect(addPlayerButtonDebugElementList[1].query(By.css("button.add"))).toBeTruthy();
+        expect(addPlayerButtonDebugElementList).toHaveSize(2);
+        expect(addPlayerButtonDebugElementList[0].query(By.css("button.add"))).not.toBeTruthy();
+        expect(addPlayerButtonDebugElementList[1].query(By.css("button.add"))).toBeTruthy();
+      });
     });
+
+    describe("Remove button", () => {
+      fit("should remove the player line when clicked", async(() => {
+        // Arrange
+        let {debugElement} = fixture;
+        
+        component.players = [
+          {id:"1", nickname:"a"},
+          {id:"2", nickname:"b"},
+        ]
+        fixture.detectChanges();
+
+        let playerRows = debugElement.queryAll(By.css(".player-row"));
+        expect(playerRows).toHaveSize(2);
+
+        let removePlayerButtonDebugElement: DebugElement = playerRows[0].query(By.css("button.remove"));
+        let removePlayerButton : HTMLElement = removePlayerButtonDebugElement.nativeElement;
+
+        // Act
+        removePlayerButton.click();
+        fixture.detectChanges();
+
+        // Assert
+        fixture.whenStable().then(() => {
+          playerRows = debugElement.queryAll(By.css(".player-row"));
+          expect(playerRows).toHaveSize(1);
+          let playerRowInput: HTMLInputElement = playerRows[0].query(By.css("input")).nativeElement;
+          expect(playerRowInput.value).toEqual("b");
+        });
+      }));
+
+      it('should be there if not the only player row', () => {
+        // Arrange
+        component.addPlayer();
+        fixture.detectChanges();
+
+        // Assert
+        let {debugElement} = fixture;
+        let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
+        
+        expect(addPlayerButtonDebugElementList).toHaveSize(2);
+        addPlayerButtonDebugElementList.forEach(player => {
+          expect(player.query(By.css("button.remove"))).toBeTruthy();
+        });
+      });
+
+      it('should not be there if only one player row', () => {
+        // Assert
+        let {debugElement} = fixture;
+        let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
+        
+        expect(addPlayerButtonDebugElementList).toHaveSize(1);
+        expect(addPlayerButtonDebugElementList[0].query(By.css("button.remove"))).not.toBeTruthy();
+      });
+
+      it("should have remove icon", () => {
+        // Arrange
+        component.addPlayer();
+        fixture.detectChanges();
+        
+        // Assert
+        let {debugElement} = fixture;
+        let addPlayerButtonDebugElementList = debugElement.queryAll(By.css(".player-row"));
+        
+        expect(addPlayerButtonDebugElementList).toHaveSize(2);
+
+        let playerRow = addPlayerButtonDebugElementList[0];
+        let addPlayerButtonIconDebugElement: DebugElement = playerRow.query(By.css("mat-icon"));
+        let addPlayerButtonIcon : HTMLElement = addPlayerButtonIconDebugElement.nativeElement;
+        let iconAttribute = addPlayerButtonIcon.getAttribute('svgIcon');
+        expect(iconAttribute).toBeTruthy();
+        expect(iconAttribute).toEqual('remove');
+        httpTestingController.expectOne("/assets/svg/icons/remove.svg");
+      });
     });
   });
 });

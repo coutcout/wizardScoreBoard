@@ -3,6 +3,10 @@
     <button mat-fab class="add" (click)="addPlayer()" *ngIf="index === (players.length - 1)">
         <mat-icon svgIcon="plus"></mat-icon>
     </button>
+
+    <button mat-fab class="remove" (click)="removePlayer(player)" *ngIf="players.length !== 1">
+        <mat-icon svgIcon="remove"></mat-icon>
+    </button>
 </div>
 
 
