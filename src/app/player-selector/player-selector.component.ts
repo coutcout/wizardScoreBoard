@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import {IconResolver, MatIconModule, MatIconRegistry} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Player } from '../player';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Game, GameStatus } from '../game';
-import { GameManagerService } from '../game-manager.service';
 
 @Component({
   selector: 'app-player-selector',

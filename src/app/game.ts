@@ -11,10 +11,6 @@ export class Game {
         this.status = GameStatus.PlayerSelection;
         this.players = [];
     }
-
-    public isPlayerSelectionPhase() : Boolean {
-        return this.status === GameStatus.PlayerSelection;
-    }
 }
 
 export enum GameStatus {

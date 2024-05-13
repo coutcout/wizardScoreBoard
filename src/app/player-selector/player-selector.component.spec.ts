@@ -10,7 +10,6 @@ import {
   HttpTestingController
 } from '@angular/common/http/testing';
 import { Player } from '../player';
-import { GameManagerService } from '../game-manager.service';
 import { Game, GameStatus } from '../game';
 
 describe('PlayerSelectorComponent', () => {

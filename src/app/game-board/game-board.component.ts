@@ -4,7 +4,6 @@ import { GameManagerService } from '../game-manager.service';
 import { Subscription } from 'rxjs';
 import { PlayerSelectorComponent } from '../player-selector/player-selector.component';
 import { CommonModule } from '@angular/common';
-import { MatIconRegistry } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
 @Component({
