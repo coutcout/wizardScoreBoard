@@ -10,6 +10,8 @@ import {
   HttpTestingController
 } from '@angular/common/http/testing';
 import { Player } from '../player';
+import { GameManagerService } from '../game-manager.service';
+import { Game, GameStatus } from '../game';
 
 describe('PlayerSelectorComponent', () => {
   const fakeSvg = `<svg><path id="someId" name="someSvg"></path></svg>`;
@@ -21,7 +23,6 @@ describe('PlayerSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PlayerSelectorComponent, MatIconModule, MatButtonModule, HttpClientTestingModule],
-      providers: []
     })
     .compileComponents();
     
@@ -236,6 +237,48 @@ describe('PlayerSelectorComponent', () => {
         expect(validateButton).toBeTruthy();
         expect(validateButton.nativeElement.disabled).toBeTrue();
       });
+    });
+
+    it('should update the game with players', () =>{
+      // Arrange
+      component.players = [
+        {id:"1",nickname:"a"},
+        {id:"2",nickname:"b"},
+      ];
+
+      component.game = new Game();
+
+      fixture.detectChanges();
+
+      // Act
+      let {debugElement} = fixture;
+      let validateButton = debugElement.query(By.css("button.validate"));
+      validateButton.nativeElement.click();
+      fixture.detectChanges();
+
+      // Assert
+      expect(component.game.players).toEqual(component.players);
+    });
+
+    it('should update the game status to running', () =>{
+      // Arrange
+      component.players = [
+        {id:"1",nickname:"a"},
+        {id:"2",nickname:"b"},
+      ];
+
+      component.game = new Game();
+
+      fixture.detectChanges();
+
+      // Act
+      let {debugElement} = fixture;
+      let validateButton = debugElement.query(By.css("button.validate"));
+      validateButton.nativeElement.click();
+      fixture.detectChanges();
+
+      // Assert
+      expect(component.game.status).toEqual(GameStatus.Running);
     });
   });
 });

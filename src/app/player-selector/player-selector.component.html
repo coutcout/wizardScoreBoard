@@ -8,7 +8,7 @@
         <mat-icon svgIcon="remove"></mat-icon>
     </button>
 </div>
-<button mat-fab extended class="validate" [disabled]="!isPlayerListValide()">
+<button mat-fab extended class="validate" [disabled]="!isPlayerListValide()" (click)="validate()">
     Validate
 </button>
 

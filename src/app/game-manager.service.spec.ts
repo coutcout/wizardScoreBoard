@@ -82,5 +82,5 @@ describe('GameManagerService', () => {
       expect(game).not.toBeNull();
       expect(game).not.toEqual(oldGame);
     }));
-  })
+  });
 });
