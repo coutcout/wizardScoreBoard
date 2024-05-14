@@ -1,1 +1,2 @@
 <app-player-selector *ngIf="game?.status === GameStatus.PlayerSelection" [game]="game"></app-player-selector>
+<app-score-board id="score-board" *ngIf="game?.status === GameStatus.Running"></app-score-board>

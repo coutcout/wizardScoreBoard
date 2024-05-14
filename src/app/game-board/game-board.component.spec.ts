@@ -89,6 +89,41 @@ describe('GameBoardComponent', () => {
         let playerSelector = debugElement.query(By.css('app-player-selector'));
         expect(playerSelector).toBeNull();
       });
+    });
+  });
+
+  describe('ScoreBoard', () => {
+    it("should be there if game is running", () => {
+      // Arrange
+      component.game = new Game();
+      component.game.status = GameStatus.Running;
+
+      // Act
+      fixture.detectChanges();
+
+      // Arrange
+      let {debugElement} = fixture;
+      let scoreBoard = debugElement.query(By.css("app-score-board"));
+      expect(scoreBoard).toBeTruthy();
+    });
+
+    [
+      GameStatus.Ended,
+      GameStatus.PlayerSelection
+    ].forEach(status => {
+      it(`should not be there if game is ${GameStatus[status]} status`, () => {
+        // Arrange
+        component.game = new Game();
+        component.game.status = status;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Arrange
+        let {debugElement} = fixture;
+        let scoreBoard = debugElement.query(By.css("app-score-board"));
+        expect(scoreBoard).toBeFalsy();
+      });
     })
-  })
+  });
 });
