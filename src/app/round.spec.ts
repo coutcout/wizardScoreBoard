@@ -2,6 +2,8 @@ import { Round } from './round';
 
 describe('Round', () => {
   it('should create an instance', () => {
-    expect(new Round()).toBeTruthy();
+    const round = new Round(0);
+    expect(round).toBeTruthy();
+    expect(round.nbCards).toEqual(0);
   });
 });

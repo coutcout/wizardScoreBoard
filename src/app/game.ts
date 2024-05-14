@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Player } from './player';
 import { Round } from './round';
+import { RoundScore } from './round-score';
 
 export class Game {
     id: string;
@@ -19,9 +20,13 @@ export class Game {
 
     start() {
         const nbRound = Math.floor(this.nbCards / this.players.length);
-        console.log(this.nbCards + "/" + this.players.length + "=" + nbRound);
         for(let i = 0; i < nbRound; ++i){
-            this.rounds.push(new Round());
+            const nbCards = i + 1;
+            const round = new Round(nbCards);
+            this.rounds.push(round);
+            this.players.forEach(player => {
+                round.roundScores.set(player.id, new RoundScore(player));
+            });
         }
     }
 }
