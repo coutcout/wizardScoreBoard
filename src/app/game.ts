@@ -19,6 +19,7 @@ export class Game {
     }
 
     start() {
+        this.status = GameStatus.Running;
         const nbRound = Math.floor(this.nbCards / this.players.length);
         for(let i = 0; i < nbRound; ++i){
             const nbCards = i + 1;
@@ -28,6 +29,10 @@ export class Game {
                 round.roundScores.set(player.id, new RoundScore(player));
             });
         }
+    }
+
+    getPlayersId(){
+        return this.players.map(p => p.id);
     }
 }
 

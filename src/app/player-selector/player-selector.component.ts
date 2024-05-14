@@ -66,7 +66,7 @@ export class PlayerSelectorComponent {
   validate(){
     if(this.game !== null){
       this.game.players = this.players;
-      this.game.status = GameStatus.Running;
+      this.game.start();
     }
   }
 }

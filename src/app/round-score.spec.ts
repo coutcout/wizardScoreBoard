@@ -3,6 +3,10 @@ import { RoundScore } from './round-score';
 
 describe('RoundScore', () => {
   it('should create an instance', () => {
-    expect(new RoundScore(new Player())).toBeTruthy();
+    const player = new Player();
+
+    const roundScore = new RoundScore(player);
+    expect(roundScore).toBeTruthy();
+    expect(roundScore.player).toEqual(player);
   });
 });
