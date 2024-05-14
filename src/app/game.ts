@@ -18,7 +18,8 @@ export class Game {
     }
 
     start() {
-        const nbRound = this.nbCards / this.players.length;
+        const nbRound = Math.floor(this.nbCards / this.players.length);
+        console.log(this.nbCards + "/" + this.players.length + "=" + nbRound);
         for(let i = 0; i < nbRound; ++i){
             this.rounds.push(new Round());
         }
