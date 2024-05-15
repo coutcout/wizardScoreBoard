@@ -45,12 +45,11 @@ describe('ScoreBoardComponent', () => {
 
     // Assert
     let {debugElement} = fixture;
-    console.log(fixture);
     let rows = debugElement.queryAll(By.css('tbody tr'));
     expect(rows).toHaveSize(30);
   });
 
-  fit('should have the round number at first column', () => {
+  it('should have the round number at first column', () => {
     // Arrange
     let game = new Game();
     game.nbCards = 60;
@@ -72,13 +71,46 @@ describe('ScoreBoardComponent', () => {
 
     // Assert
     let {debugElement} = fixture;
-    console.log(fixture);
     let firstCols = debugElement.queryAll(By.css('tbody tr td:first-child'));
     firstCols.forEach((col, idx) => {
       const nativeElement: HTMLElement = col.nativeElement;
       expect(nativeElement.textContent).toEqual((idx + 1).toString());
     });
+  });
 
+  fit('should have a column for each player', () => {
+    // Arrange
+    let game = new Game();
+    game.nbCards = 60;
+    game.players = [
+      {
+        id:'1',
+        nickname:'a'
+      },
+      {
+        id:'2',
+        nickname:'b'
+      }
+    ];
+    component.game = game;
 
-  })
+    // Act
+    game.start();
+    fixture.detectChanges();
+
+    // Assert
+    let {debugElement} = fixture;
+    let playerHeaders = debugElement.queryAll(By.css('thead tr:first-child th')).slice(1);
+    let playerHeadersNickname = playerHeaders
+      .map(
+        pHeader => {
+          const nativeElement: HTMLElement = pHeader.nativeElement;
+          return nativeElement.textContent;
+        }
+      )
+      .sort();
+    
+    let playerNicknames = game.players.map(p => p.nickname).sort();
+    expect(playerHeadersNickname).toEqual(playerNicknames);
+  });
 });
