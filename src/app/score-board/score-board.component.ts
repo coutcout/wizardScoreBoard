@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Game } from '../game';
 import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { Round, RoundStatus } from '../round';
 
 @Component({
   selector: 'app-score-board',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './score-board.component.scss'
 })
 export class ScoreBoardComponent {
+  readonly RoundStatus = RoundStatus;
 
   @Input()
   game!: Game | null;
@@ -23,5 +25,9 @@ export class ScoreBoardComponent {
       'round',
       ...this.game!.getPlayersId()
     ]
+  }
+
+  activateAnnouncementPhase(round: Round){
+    round.status = RoundStatus.announcement;
   }
 }

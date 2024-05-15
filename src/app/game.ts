@@ -9,6 +9,7 @@ export class Game {
     players: Player[];
     nbCards: number;
     rounds: Round[];
+    currentRound: number = -1;
     
     constructor(){
         this.id = uuidv4();
@@ -23,6 +24,7 @@ export class Game {
             throw new Error("Cannot start a game without player");
         }
         this.status = GameStatus.Running;
+        this.currentRound = 0;
         const nbRound = Math.floor(this.nbCards / this.players.length);
         for(let i = 0; i < nbRound; ++i){
             const nbCards = i + 1;
