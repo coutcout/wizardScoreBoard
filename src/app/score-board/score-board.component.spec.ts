@@ -78,7 +78,7 @@ describe('ScoreBoardComponent', () => {
     });
   });
 
-  fit('should have a column for each player', () => {
+  it('should have a column for each player', () => {
     // Arrange
     let game = new Game();
     game.nbCards = 60;
@@ -108,9 +108,13 @@ describe('ScoreBoardComponent', () => {
           return nativeElement.textContent;
         }
       )
-      .sort();
+      .filter(pHeader => pHeader)
+      .sort((a, b) => a!.localeCompare(b!));
     
-    let playerNicknames = game.players.map(p => p.nickname).sort();
+    let playerNicknames = game.players
+      .map(p => p.nickname)
+      .filter(pHeader => pHeader)
+      .sort((a, b) => a!.localeCompare(b!));;
     expect(playerHeadersNickname).toEqual(playerNicknames);
   });
 });

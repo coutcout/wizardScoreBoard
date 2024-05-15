@@ -2,7 +2,7 @@ import { RoundScore } from "./round-score";
 
 export class Round {
   nbCards: number;
-  roundScores: Map<String, RoundScore>;
+  roundScores: Map<string, RoundScore>;
   
   constructor(nbCards: number){
     this.nbCards = nbCards;
