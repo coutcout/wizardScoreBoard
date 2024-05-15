@@ -108,13 +108,13 @@ describe('ScoreBoardComponent', () => {
           return nativeElement.textContent;
         }
       )
-      .filter(pHeader => pHeader)
+      .filter(pHeader => !!pHeader)
       .sort((a, b) => a!.localeCompare(b!));
     
     let playerNicknames = game.players
       .map(p => p.nickname)
       .filter(pHeader => pHeader)
-      .sort((a, b) => a!.localeCompare(b!));;
+      .sort((a, b) => a.localeCompare(b));;
     expect(playerHeadersNickname).toEqual(playerNicknames);
   });
 });
