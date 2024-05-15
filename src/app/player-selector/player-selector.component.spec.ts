@@ -202,11 +202,6 @@ describe('PlayerSelectorComponent', () => {
       expect(validateButton.nativeElement.disabled).toBeFalse();
     });
 
-    const parsePlayer = (player: any) => {
-      let p : Player = new Player();
-      return Object.assign(p, player);
-    };
-
     [
       [
         {id:"1",nickname:" "},
@@ -222,7 +217,7 @@ describe('PlayerSelectorComponent', () => {
       ],
       [],
     ].forEach(playerList => {
-      it(`should not have a disabled validate button with ${playerList.map(p => parsePlayer(p))}`, () => {
+      it(`should not have a disabled validate button with ${playerList.map(p => Player.parsePlayer(p))}`, () => {
         // Arrange
         component.players = playerList;
         

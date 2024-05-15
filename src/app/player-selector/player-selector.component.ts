@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Player } from '../player';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Game, GameStatus } from '../game';
+import { Game } from '../game';
 
 @Component({
   selector: 'app-player-selector',
@@ -66,7 +66,7 @@ export class PlayerSelectorComponent {
   validate(){
     if(this.game !== null){
       this.game.players = this.players;
-      this.game.status = GameStatus.Running;
+      this.game.start();
     }
   }
 }

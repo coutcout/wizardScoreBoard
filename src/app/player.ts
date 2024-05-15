@@ -12,4 +12,9 @@ export class Player {
     toString(): string {
         return JSON.stringify(this);
     }
+
+    static parsePlayer(player: any): Player{
+        let p : Player = new Player();
+        return Object.assign(p, player);
+    }
 }

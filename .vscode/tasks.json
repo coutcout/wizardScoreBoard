@@ -33,11 +33,9 @@
           }
         }
       },
-
       "options": {
         "cwd": "${workspaceFolder}"
-      },
-
+      }
     },
     {
       "type": "npm",

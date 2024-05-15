@@ -34,7 +34,7 @@ describe('GameNavBarComponent', () => {
     const { debugElement } = fixture;
     const button = debugElement.query(By.css("#gameNavBar button:nth-child(1)"));
     expect(button).not.toBeNull();
-    expect(button.nativeElement.textContent === "New Game")
+    expect(button.nativeElement.textContent).toEqual("New Game");
   })
 
   it('should start a new game when New Game button is clicked', () => {
