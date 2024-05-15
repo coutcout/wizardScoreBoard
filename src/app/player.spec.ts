@@ -16,4 +16,21 @@ describe('Player', () => {
     // Assert
     expect(stringPlayer).toEqual(JSON.stringify(player));
   });
+
+  describe('ParsePlayer', () => {
+    it('should create a Player', () => {
+      // Arrange
+      let jsonPlayer = {
+        id: '1',
+        nickname: 'test'
+      };
+
+      // Act
+      let parsedPlayer = Player.parsePlayer(jsonPlayer);
+
+      // Assert
+      expect(parsedPlayer.id).toEqual('1');
+      expect(parsedPlayer.nickname).toEqual('test');
+    });
+  });
 });

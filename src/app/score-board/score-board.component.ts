@@ -21,7 +21,7 @@ export class ScoreBoardComponent {
   getTableData(){
     return [
       'round',
-      ...this.game?.getPlayersId() ?? []
+      ...this.game!.getPlayersId()
     ]
   }
 }

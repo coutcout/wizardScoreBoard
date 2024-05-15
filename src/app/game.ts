@@ -19,6 +19,9 @@ export class Game {
     }
 
     start() {
+        if(this.players.length === 0){
+            throw new Error("Cannot start a game without player");
+        }
         this.status = GameStatus.Running;
         const nbRound = Math.floor(this.nbCards / this.players.length);
         for(let i = 0; i < nbRound; ++i){

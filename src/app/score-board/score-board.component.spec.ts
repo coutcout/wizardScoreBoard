@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScoreBoardComponent } from './score-board.component';
 import { Game } from '../game';
 import { By } from '@angular/platform-browser';
+import { Player } from '../player';
 
 describe('ScoreBoardComponent', () => {
   let component: ScoreBoardComponent;
@@ -78,43 +79,41 @@ describe('ScoreBoardComponent', () => {
     });
   });
 
-  it('should have a column for each player', () => {
-    // Arrange
-    let game = new Game();
-    game.nbCards = 60;
-    game.players = [
-      {
-        id:'1',
-        nickname:'a'
-      },
-      {
-        id:'2',
-        nickname:'b'
-      }
-    ];
-    component.game = game;
+  [
+    [
+      {id:"1",nickname:"a"},
+      {id:"2",nickname:"b"}
+    ]
+  ].forEach(playerList => {
+    it(`should have a column for each player. Case: ${playerList.map(p => Player.parsePlayer(p))}`, () => {
+      // Arrange
+      let game = new Game();
+      game.nbCards = 60;
+      game.players = playerList;
+      component.game = game;
 
-    // Act
-    game.start();
-    fixture.detectChanges();
+      // Act
+      game.start();
+      fixture.detectChanges();
 
-    // Assert
-    let {debugElement} = fixture;
-    let playerHeaders = debugElement.queryAll(By.css('thead tr:first-child th')).slice(1);
-    let playerHeadersNickname = playerHeaders
-      .map(
-        pHeader => {
-          const nativeElement: HTMLElement = pHeader.nativeElement;
-          return nativeElement.textContent;
-        }
-      )
-      .filter(pHeader => !!pHeader)
-      .sort((a, b) => (a ?? "").localeCompare(b ?? ""));
-    
-    let playerNicknames = game.players
-      .map(p => p.nickname)
-      .filter(pHeader => pHeader)
-      .sort((a, b) => a.localeCompare(b));;
-    expect(playerHeadersNickname).toEqual(playerNicknames);
+      // Assert
+      let {debugElement} = fixture;
+      let playerHeaders = debugElement.queryAll(By.css('thead tr:first-child th')).slice(1);
+      let playerHeadersNickname = playerHeaders
+        .map(
+          pHeader => {
+            const nativeElement: HTMLElement = pHeader.nativeElement;
+            return nativeElement.textContent;
+          }
+        )
+        .filter(pHeader => !!pHeader)
+        .sort((a, b) => (a ?? "").localeCompare(b ?? ""));
+      
+      let playerNicknames = game.players
+        .map(p => p.nickname)
+        .filter(pHeader => pHeader)
+        .sort((a, b) => a.localeCompare(b));;
+      expect(playerHeadersNickname).toEqual(playerNicknames);
+    });
   });
 });

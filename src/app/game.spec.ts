@@ -105,5 +105,14 @@ describe('Game', () => {
       });
 
     });
+
+    it('Should throw an Error if no player', () => {
+      // Arrange
+      let game: Game = new Game();
+
+      // Act / Assert
+      expect(() => game.start()).toThrow(new Error("Cannot start a game without player"));
+
+    });
   });
 });
