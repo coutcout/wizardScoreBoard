@@ -109,7 +109,7 @@ describe('ScoreBoardComponent', () => {
         }
       )
       .filter(pHeader => !!pHeader)
-      .sort((a, b) => a!.localeCompare(b!));
+      .sort((a, b) => (a ?? "").localeCompare(b ?? ""));
     
     let playerNicknames = game.players
       .map(p => p.nickname)
