@@ -12,6 +12,11 @@
                     [disabled]="element.status === RoundStatus.announcement">
                         Announcements
                 </button>
+                <button mat-button class="results" 
+                    (click)='activateResultsPhase(element)'
+                    [disabled]="element.status === RoundStatus.results">
+                        Results
+                </button>
             </div>
         </td>
     </ng-container>
