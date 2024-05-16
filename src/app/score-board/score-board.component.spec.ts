@@ -421,6 +421,37 @@ describe('ScoreBoardComponent', () => {
       rounds = debugElement.queryAll(By.css('tbody tr'));
     });
     
+    [
+      'announcement',
+      'results'
+    ].forEach(inputClass => {
+      [
+        RoundStatus.announcement,
+        RoundStatus.results
+      ].forEach(roundStatus => {
+        it(`${inputClass} inputs should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
+          // Arrange
+          game.rounds.forEach(round => {
+            round.status = roundStatus;
+          });
+    
+          // Act
+          fixture.detectChanges();
+    
+          // Assert
+          let {debugElement} = fixture;
+          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
+      
+          fixture.whenStable().then(() => {
+            otherRounds.forEach(round => {
+              let inputResults = round.queryAll(By.css('input.' + inputClass));
+              expect(areAllInputsDisabled(inputResults)).toBeTrue();
+            });
+          });
+        }));
+      });
+    });
+
     describe('Input results field', () => {
       let inputResults: DebugElement[];
   
@@ -472,33 +503,6 @@ describe('ScoreBoardComponent', () => {
           expect(everyInputsEnabled).toBeTrue();
         });
       }));
-  
-      [
-        RoundStatus.announcement,
-        RoundStatus.results
-      ].forEach(roundStatus => {
-        it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
-          // Arrange
-          game.rounds.forEach(round => {
-            round.status = roundStatus;
-          });
-    
-          // Act
-          fixture.detectChanges();
-    
-          // Assert
-          let {debugElement} = fixture;
-          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
-      
-          fixture.whenStable().then(() => {
-            otherRounds.forEach(round => {
-              let inputResults = round.queryAll(By.css('input.results'));
-              let everyInputsDisabled : boolean = areAllInputsDisabled(inputResults);    
-              expect(everyInputsDisabled).toBeTrue();
-            });
-          });
-        }));
-      })
     });
     
     describe('Input announcement field', () => {
@@ -553,32 +557,6 @@ describe('ScoreBoardComponent', () => {
           expect(areAllInputsDisabled(inputAnnouncements)).toBeTrue();
         });
       }));
-
-      [
-        RoundStatus.announcement,
-        RoundStatus.results
-      ].forEach(roundStatus => {
-        it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
-          // Arrange
-          game.rounds.forEach(round => {
-            round.status = roundStatus;
-          });
-    
-          // Act
-          fixture.detectChanges();
-    
-          // Assert
-          let {debugElement} = fixture;
-          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
-      
-          fixture.whenStable().then(() => {
-            otherRounds.forEach(round => {
-              let inputResults = round.queryAll(By.css('input.announcement'));
-              expect(areAllInputsDisabled(inputResults)).toBeTrue();
-            });
-          });
-        }));
-      })
     });
   });
 });
