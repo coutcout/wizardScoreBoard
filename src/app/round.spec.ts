@@ -12,8 +12,8 @@ describe('Round', () => {
     it('should return the total of annoucements', () => {
       // Arrange
       let round: Round = new Round(4);
-      round.roundScores.set('a', {player:new Player(), announcement: 2});
-      round.roundScores.set('b', {player:new Player(), announcement: 3});
+      round.roundScores.set('a', {player:new Player(), announcement: 2, result:null});
+      round.roundScores.set('b', {player:new Player(), announcement: 3, result:null});
       
       // Act
       let total = round.getTotalOfAnnouncement();
@@ -26,8 +26,8 @@ describe('Round', () => {
     it('should return the total of annoucements with empty annoucements', () => {
       // Arrange
       let round: Round = new Round(4);
-      round.roundScores.set('a', {player:new Player(), announcement: 2});
-      round.roundScores.set('b', {player:new Player(), announcement: null});
+      round.roundScores.set('a', {player:new Player(), announcement: 2, result:null});
+      round.roundScores.set('b', {player:new Player(), announcement: null, result:null});
       
       // Act
       let total = round.getTotalOfAnnouncement();
@@ -41,8 +41,8 @@ describe('Round', () => {
     it('should be true if total of announcements is not equal to number of cards', () => {
       // Arrange
       let round: Round = new Round(4);
-      round.roundScores.set('a', {player:new Player(), announcement: 2});
-      round.roundScores.set('b', {player:new Player(), announcement: 3});
+      round.roundScores.set('a', {player:new Player(), announcement: 2, result:null});
+      round.roundScores.set('b', {player:new Player(), announcement: 3, result:null});
       
       // Act
       let isValid = round.isAnnouncementValid();
@@ -55,8 +55,8 @@ describe('Round', () => {
     it('should be false if total of announcements is equal to number of cards', () => {
       // Arrange
       let round: Round = new Round(4);
-      round.roundScores.set('a', {player:new Player(), announcement: 2});
-      round.roundScores.set('b', {player:new Player(), announcement: 2});
+      round.roundScores.set('a', {player:new Player(), announcement: 2, result:null});
+      round.roundScores.set('b', {player:new Player(), announcement: 2, result:null});
       
       // Act
       let isValid = round.isAnnouncementValid();

@@ -34,4 +34,8 @@ export class ScoreBoardComponent {
   activateAnnouncementPhase(round: Round){
     round.status = RoundStatus.announcement;
   }
+
+  activateResultsPhase(round: Round){
+    round.status = RoundStatus.results;
+  }
 }
