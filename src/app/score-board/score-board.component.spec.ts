@@ -422,7 +422,7 @@ describe('ScoreBoardComponent', () => {
     });
     
     describe('Input results field', () => {
-      let inputResults: DebugElement[] | { nativeElement: { value: any; }; }[];
+      let inputResults: DebugElement[];
   
       beforeEach(() => {
         inputResults = rounds[game.currentRound].queryAll(By.css('input.results'));
@@ -453,10 +453,7 @@ describe('ScoreBoardComponent', () => {
   
         // Assert
         fixture.whenStable().then(() => {
-          let everyInputsEnabled : boolean = inputResults
-            .map(input => input.nativeElement.disabled)
-            .every(disabled => disabled === false);
-  
+          let everyInputsEnabled : boolean = areAllInputsEnabled(inputResults);  
           expect(everyInputsEnabled).toBeTrue();
         });
       }));
@@ -470,9 +467,7 @@ describe('ScoreBoardComponent', () => {
   
         // Assert
         fixture.whenStable().then(() => {
-          let everyInputsEnabled : boolean = inputResults
-            .map(input => input.nativeElement.disabled)
-            .every(disabled => disabled === true);
+          let everyInputsEnabled : boolean = areAllInputsDisabled(inputResults);
   
           expect(everyInputsEnabled).toBeTrue();
         });
@@ -498,10 +493,7 @@ describe('ScoreBoardComponent', () => {
           fixture.whenStable().then(() => {
             otherRounds.forEach(round => {
               let inputResults = round.queryAll(By.css('input.results'));
-              let everyInputsDisabled : boolean = inputResults
-                .map(input => input.nativeElement.disabled)
-                .every(disabled => disabled === true);
-    
+              let everyInputsDisabled : boolean = areAllInputsDisabled(inputResults);    
               expect(everyInputsDisabled).toBeTrue();
             });
           });
@@ -510,7 +502,7 @@ describe('ScoreBoardComponent', () => {
     });
     
     describe('Input announcement field', () => {
-      let inputAnnouncements: DebugElement[] | { nativeElement: { value: any; }; }[];
+      let inputAnnouncements: DebugElement[];
   
       beforeEach(async() => {
         inputAnnouncements = rounds[game.currentRound].queryAll(By.css('input.announcement'));
@@ -558,11 +550,7 @@ describe('ScoreBoardComponent', () => {
   
         // Assert
         fixture.whenStable().then(() => {
-          let everyInputsEnabled : boolean = inputAnnouncements
-            .map(input => input.nativeElement.disabled)
-            .every(disabled => disabled === true);
-  
-          expect(everyInputsEnabled).toBeTrue();
+          expect(areAllInputsDisabled(inputAnnouncements)).toBeTrue();
         });
       }));
 
@@ -586,11 +574,7 @@ describe('ScoreBoardComponent', () => {
           fixture.whenStable().then(() => {
             otherRounds.forEach(round => {
               let inputResults = round.queryAll(By.css('input.announcement'));
-              let everyInputsDisabled : boolean = inputResults
-                .map(input => input.nativeElement.disabled)
-                .every(disabled => disabled === true);
-    
-              expect(everyInputsDisabled).toBeTrue();
+              expect(areAllInputsDisabled(inputResults)).toBeTrue();
             });
           });
         }));
@@ -598,3 +582,15 @@ describe('ScoreBoardComponent', () => {
     });
   });
 });
+
+function areAllInputsDisabled(inputs: DebugElement[]):boolean{
+  return inputs
+          .map(input => input.nativeElement.disabled)
+          .every(disabled => disabled === true);
+}
+
+function areAllInputsEnabled(inputs: DebugElement[]):boolean{
+  return inputs
+          .map(input => input.nativeElement.disabled)
+          .every(disabled => disabled === false);
+}
