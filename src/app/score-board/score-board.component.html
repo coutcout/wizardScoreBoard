@@ -22,12 +22,18 @@
     </ng-container>
     <ng-container *ngFor="let player of game.players" matColumnDef="{{player.id}}">
         <th mat-header-cell *matHeaderCellDef>{{player.nickname}}</th>
-        <td mat-cell *matCellDef="let element;">
+        <td mat-cell *matCellDef="let element; let idx = index;">
             <input matInput 
                 type="number" 
                 class="announcement" 
                 [(ngModel)]="element.roundScores.get(player.id).announcement"
-                [disabled]="element.status === RoundStatus.results"
+                [disabled]="element.status === RoundStatus.results || game.currentRound !== idx"
+                />
+            <input matInput 
+                type="number" 
+                class="results" 
+                [(ngModel)]="element.roundScores.get(player.id).result"
+                [disabled]="element.status === RoundStatus.announcement || game.currentRound !== idx"
                 />
         </td>
     </ng-container>
