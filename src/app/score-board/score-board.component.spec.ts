@@ -237,7 +237,6 @@ describe('ScoreBoardComponent', () => {
       fixture.detectChanges();
       game.currentRound = 3;
       let currentRound = game.rounds[game.currentRound];
-      console.log(game);
       currentRound.roundScores.get('1')!.announcement = 1;
       currentRound.roundScores.get('2')!.announcement = 3;
       component.game = game;
@@ -245,13 +244,8 @@ describe('ScoreBoardComponent', () => {
       
       // Assert
       let {debugElement} = fixture;
-      fixture.whenStable().then(() => {
-        let totalOfAnnouncements = Array.from(currentRound.roundScores.values())
-        .map(roundScore => roundScore.announcement)
-        .filter(announcement => !!announcement)
-        .reduce((sum, current) => sum! + current!, 0);
-        
-        expect(totalOfAnnouncements).toEqual(currentRound.nbCards);
+      fixture.whenStable().then(() => {        
+        expect(currentRound.getTotalOfAnnouncement()).toEqual(currentRound.nbCards);
         let round: DebugElement = debugElement.query(By.css('tbody tr.current-round'));
         expect(round.nativeElement.getAttribute('class').split(' ').indexOf("invalidAnnouncement")).not.toEqual(-1);
       });
@@ -275,7 +269,6 @@ describe('ScoreBoardComponent', () => {
       fixture.detectChanges();
       game.currentRound = 2;
       let currentRound = game.rounds[game.currentRound];
-      console.log(game);
       currentRound.roundScores.get('1')!.announcement = 1;
       currentRound.roundScores.get('2')!.announcement = 3;
       component.game = game;
@@ -283,13 +276,8 @@ describe('ScoreBoardComponent', () => {
       
       // Assert
       let {debugElement} = fixture;
-      fixture.whenStable().then(() => {
-        let totalOfAnnouncements = Array.from(currentRound.roundScores.values())
-        .map(roundScore => roundScore.announcement)
-        .filter(announcement => !!announcement)
-        .reduce((sum, current) => sum! + current!, 0);
-        
-        expect(totalOfAnnouncements).not.toEqual(currentRound.nbCards);
+      fixture.whenStable().then(() => {        
+        expect(currentRound.getTotalOfAnnouncement()).not.toEqual(currentRound.nbCards);
         let round: DebugElement = debugElement.query(By.css('tbody tr.current-round'));
         expect(round.nativeElement.getAttribute('class').split(' ').indexOf("invalidAnnouncement")).toEqual(-1);
       });

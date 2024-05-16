@@ -35,10 +35,6 @@ export class ScoreBoardComponent {
     round.status = RoundStatus.announcement;
   }
 
-  isAnnouncementValid(round: any){
-    
-  }
-
   debug(object: any){
     console.log(object);
   }
