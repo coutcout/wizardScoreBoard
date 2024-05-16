@@ -10,6 +10,17 @@ export class Round {
     this.roundScores = new Map();
     this.status = RoundStatus.announcement;
   }
+  
+  getTotalOfAnnouncement(){
+    return Array.from(this.roundScores.values())
+    .map(roundScore => roundScore.announcement)
+    .filter(announcement => !!announcement)
+    .reduce((sum, current) => sum! + current!, 0);
+  }
+
+  isAnnouncementValid() {
+    return this.getTotalOfAnnouncement() !== this.nbCards;
+  }
 }
 
 export enum RoundStatus{
