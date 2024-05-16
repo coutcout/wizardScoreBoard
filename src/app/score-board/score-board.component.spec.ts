@@ -215,119 +215,6 @@ describe('ScoreBoardComponent', () => {
         expect(round.nativeElement.getAttribute('class').split(' ').indexOf("invalidAnnouncement")).toEqual(-1);
       });
     }));
-
-    describe('Input announcement field', () => {
-      let game: Game;
-      let currentRound: Round;
-      let inputAnnouncements: DebugElement[] | { nativeElement: { value: any; }; }[];
-  
-      beforeEach(async() => {
-        // Arrange
-        game = new Game();
-        game.nbCards = 60;
-        game.players = [
-          {
-            id:'1',
-            nickname:'a'
-          },
-          {
-            id:'2',
-            nickname:'b'
-          }
-        ];
-        
-        game.start();
-        game.currentRound = 3;
-        currentRound = game.rounds[game.currentRound];
-        component.game = game;
-        fixture.detectChanges();
-        
-        let {debugElement} = fixture;
-        let rounds = debugElement.queryAll(By.css('tbody tr'));
-        
-        inputAnnouncements = rounds[game.currentRound].queryAll(By.css('input.announcement'));
-      });
-  
-      it('Should have announcement value for each player', fakeAsync(() => {
-        // Arrange
-        currentRound.roundScores.get('1')!.announcement = 1;
-        currentRound.roundScores.get('2')!.announcement = 3;
-  
-        // Act
-        fixture.detectChanges();
-  
-        // Assert
-        fixture.whenStable().then(() => {
-          expect(inputAnnouncements).toHaveSize(2);
-          expect(inputAnnouncements[0].nativeElement.valueAsNumber).toEqual(1);
-          expect(inputAnnouncements[1].nativeElement.valueAsNumber).toEqual(3);
-        });
-      }));
-      
-      it('Should be enabled when round status is announcement', fakeAsync(() => {
-        // Arrange
-        currentRound.status = RoundStatus.announcement;
-  
-        // Act
-        fixture.detectChanges();
-  
-        // Assert
-        fixture.whenStable().then(() => {
-          let everyInputsEnabled : boolean = inputAnnouncements
-            .map(input => input.nativeElement.disabled)
-            .every(disabled => disabled === false);
-  
-          expect(everyInputsEnabled).toBeTrue();
-        });
-      }));
-  
-      it('Should be disabled when round status is results', fakeAsync(() => {
-        // Arrange
-        currentRound.status = RoundStatus.results;
-  
-        // Act
-        fixture.detectChanges();
-  
-        // Assert
-        fixture.whenStable().then(() => {
-          let everyInputsEnabled : boolean = inputAnnouncements
-            .map(input => input.nativeElement.disabled)
-            .every(disabled => disabled === true);
-  
-          expect(everyInputsEnabled).toBeTrue();
-        });
-      }));
-
-      [
-        RoundStatus.announcement,
-        RoundStatus.results
-      ].forEach(roundStatus => {
-        it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
-          // Arrange
-          game.rounds.forEach(round => {
-            round.status = roundStatus;
-          });
-    
-          // Act
-          fixture.detectChanges();
-    
-          // Assert
-          let {debugElement} = fixture;
-          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
-      
-          fixture.whenStable().then(() => {
-            otherRounds.forEach(round => {
-              let inputResults = round.queryAll(By.css('input.announcement'));
-              let everyInputsDisabled : boolean = inputResults
-                .map(input => input.nativeElement.disabled)
-                .every(disabled => disabled === true);
-    
-              expect(everyInputsDisabled).toBeTrue();
-            });
-          });
-        }));
-      })
-    });
   
     describe('Announcement Button', () => {
       let announcementButtonDebugElement: DebugElement;
@@ -503,11 +390,12 @@ describe('ScoreBoardComponent', () => {
     });
   });
 
-  describe('Input results field', () => {
+  
+  describe('Input fields', () => {
     let game: Game;
     let currentRound: Round;
-    let inputResults: DebugElement[] | { nativeElement: { value: any; }; }[];
-
+    let rounds: DebugElement[];
+    
     beforeEach(async() => {
       // Arrange
       game = new Game();
@@ -530,90 +418,183 @@ describe('ScoreBoardComponent', () => {
       fixture.detectChanges();
       
       let {debugElement} = fixture;
-      let rounds = debugElement.queryAll(By.css('tbody tr'));
-      inputResults = rounds[game.currentRound].queryAll(By.css('input.results'));
+      rounds = debugElement.queryAll(By.css('tbody tr'));
     });
-
-    it('Should have results value for each player', fakeAsync(() => {
-      // Arrange
-      currentRound.roundScores.get('1')!.result = 1;
-      currentRound.roundScores.get('2')!.result = 3;
-
-      // Act
-      fixture.detectChanges();
-
-      // Assert
-      fixture.whenStable().then(() => {
-        expect(inputResults).toHaveSize(2);
-        expect(inputResults[0].nativeElement.valueAsNumber).toEqual(1);
-        expect(inputResults[1].nativeElement.valueAsNumber).toEqual(3);
-      });
-    }));
     
-    it('Should be enabled when round status is results', fakeAsync(() => {
-      // Arrange
-      currentRound.status = RoundStatus.results;
-
-      // Act
-      fixture.detectChanges();
-
-      // Assert
-      fixture.whenStable().then(() => {
-        let everyInputsEnabled : boolean = inputResults
-          .map(input => input.nativeElement.disabled)
-          .every(disabled => disabled === false);
-
-        expect(everyInputsEnabled).toBeTrue();
+    describe('Input results field', () => {
+      let inputResults: DebugElement[] | { nativeElement: { value: any; }; }[];
+  
+      beforeEach(() => {
+        inputResults = rounds[game.currentRound].queryAll(By.css('input.results'));
       });
-    }));
-
-    it('Should be disabled when round status is announcement', fakeAsync(() => {
-      // Arrange
-      currentRound.status = RoundStatus.announcement;
-
-      // Act
-      fixture.detectChanges();
-
-      // Assert
-      fixture.whenStable().then(() => {
-        let everyInputsEnabled : boolean = inputResults
-          .map(input => input.nativeElement.disabled)
-          .every(disabled => disabled === true);
-
-        expect(everyInputsEnabled).toBeTrue();
-      });
-    }));
-
-    [
-      RoundStatus.announcement,
-      RoundStatus.results
-    ].forEach(roundStatus => {
-      it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
+  
+      it('Should have results value for each player', fakeAsync(() => {
         // Arrange
-        game.rounds.forEach(round => {
-          round.status = roundStatus;
-        });
+        currentRound.roundScores.get('1')!.result = 1;
+        currentRound.roundScores.get('2')!.result = 3;
   
         // Act
         fixture.detectChanges();
   
         // Assert
-        let {debugElement} = fixture;
-        let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
-    
         fixture.whenStable().then(() => {
-          otherRounds.forEach(round => {
-            let inputResults = round.queryAll(By.css('input.results'));
-            let everyInputsDisabled : boolean = inputResults
-              .map(input => input.nativeElement.disabled)
-              .every(disabled => disabled === true);
-  
-            expect(everyInputsDisabled).toBeTrue();
-          });
+          expect(inputResults).toHaveSize(2);
+          expect(inputResults[0].nativeElement.valueAsNumber).toEqual(1);
+          expect(inputResults[1].nativeElement.valueAsNumber).toEqual(3);
         });
       }));
-    })
-
+      
+      it('Should be enabled when round status is results', fakeAsync(() => {
+        // Arrange
+        currentRound.status = RoundStatus.results;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        fixture.whenStable().then(() => {
+          let everyInputsEnabled : boolean = inputResults
+            .map(input => input.nativeElement.disabled)
+            .every(disabled => disabled === false);
+  
+          expect(everyInputsEnabled).toBeTrue();
+        });
+      }));
+  
+      it('Should be disabled when round status is announcement', fakeAsync(() => {
+        // Arrange
+        currentRound.status = RoundStatus.announcement;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        fixture.whenStable().then(() => {
+          let everyInputsEnabled : boolean = inputResults
+            .map(input => input.nativeElement.disabled)
+            .every(disabled => disabled === true);
+  
+          expect(everyInputsEnabled).toBeTrue();
+        });
+      }));
+  
+      [
+        RoundStatus.announcement,
+        RoundStatus.results
+      ].forEach(roundStatus => {
+        it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
+          // Arrange
+          game.rounds.forEach(round => {
+            round.status = roundStatus;
+          });
     
+          // Act
+          fixture.detectChanges();
+    
+          // Assert
+          let {debugElement} = fixture;
+          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
+      
+          fixture.whenStable().then(() => {
+            otherRounds.forEach(round => {
+              let inputResults = round.queryAll(By.css('input.results'));
+              let everyInputsDisabled : boolean = inputResults
+                .map(input => input.nativeElement.disabled)
+                .every(disabled => disabled === true);
+    
+              expect(everyInputsDisabled).toBeTrue();
+            });
+          });
+        }));
+      })
+    });
+    
+    describe('Input announcement field', () => {
+      let inputAnnouncements: DebugElement[] | { nativeElement: { value: any; }; }[];
+  
+      beforeEach(async() => {
+        inputAnnouncements = rounds[game.currentRound].queryAll(By.css('input.announcement'));
+      });
+  
+      it('Should have announcement value for each player', fakeAsync(() => {
+        // Arrange
+        currentRound.roundScores.get('1')!.announcement = 1;
+        currentRound.roundScores.get('2')!.announcement = 3;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        fixture.whenStable().then(() => {
+          expect(inputAnnouncements).toHaveSize(2);
+          expect(inputAnnouncements[0].nativeElement.valueAsNumber).toEqual(1);
+          expect(inputAnnouncements[1].nativeElement.valueAsNumber).toEqual(3);
+        });
+      }));
+      
+      it('Should be enabled when round status is announcement', fakeAsync(() => {
+        // Arrange
+        currentRound.status = RoundStatus.announcement;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        fixture.whenStable().then(() => {
+          let everyInputsEnabled : boolean = inputAnnouncements
+            .map(input => input.nativeElement.disabled)
+            .every(disabled => disabled === false);
+  
+          expect(everyInputsEnabled).toBeTrue();
+        });
+      }));
+  
+      it('Should be disabled when round status is results', fakeAsync(() => {
+        // Arrange
+        currentRound.status = RoundStatus.results;
+  
+        // Act
+        fixture.detectChanges();
+  
+        // Assert
+        fixture.whenStable().then(() => {
+          let everyInputsEnabled : boolean = inputAnnouncements
+            .map(input => input.nativeElement.disabled)
+            .every(disabled => disabled === true);
+  
+          expect(everyInputsEnabled).toBeTrue();
+        });
+      }));
+
+      [
+        RoundStatus.announcement,
+        RoundStatus.results
+      ].forEach(roundStatus => {
+        it(`Should be disabled when round is not the current round - ${RoundStatus[roundStatus]} status`, fakeAsync(() => {
+          // Arrange
+          game.rounds.forEach(round => {
+            round.status = roundStatus;
+          });
+    
+          // Act
+          fixture.detectChanges();
+    
+          // Assert
+          let {debugElement} = fixture;
+          let otherRounds = debugElement.queryAll(By.css('tbody tr:not(.current-round)'));
+      
+          fixture.whenStable().then(() => {
+            otherRounds.forEach(round => {
+              let inputResults = round.queryAll(By.css('input.announcement'));
+              let everyInputsDisabled : boolean = inputResults
+                .map(input => input.nativeElement.disabled)
+                .every(disabled => disabled === true);
+    
+              expect(everyInputsDisabled).toBeTrue();
+            });
+          });
+        }));
+      })
+    });
   });
 });
