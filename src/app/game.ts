@@ -43,7 +43,7 @@ export class Game {
     getTotalForPlayer(idPlayer: string, roundNumber: number): number {
         return this.rounds.filter((r, idx) => idx <= roundNumber)
             .map((r: Round) => r.roundScores.get(idPlayer)!.getTotal())
-            .reduce((a, b) => a! + b!, 0);
+            .reduce((a, b) => a + b, 0);
     }
 }
 
