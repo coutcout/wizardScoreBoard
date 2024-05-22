@@ -21,7 +21,7 @@ export class RoundScore {
             return base + this.result * 10;
         } else {
             let res = Math.abs(this.result - this.announcement);
-            return res! * 10 * -1;
+            return res * 10 * -1;
         }
         
     }
