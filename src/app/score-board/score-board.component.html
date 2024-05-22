@@ -38,6 +38,9 @@
             <div class="total" *ngIf="element.roundScores.get(player.id).announcement && element.roundScores.get(player.id).result">
                 {{element.roundScores.get(player.id).getTotal()}}
             </div>
+            <div class="totalSum" *ngIf="idx <= game.currentRound">
+                {{game.getTotalForPlayer(player.id, idx)}}
+            </div>
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef='getTableData()'></tr>

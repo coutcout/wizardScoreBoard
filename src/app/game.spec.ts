@@ -115,4 +115,44 @@ describe('Game', () => {
 
     });
   });
+
+  describe('getTotalForPlayer', () => {
+    [
+      {'roundNumber': 0, 'expectedResult': 10},
+      {'roundNumber': 1, 'expectedResult': 0},
+      {'roundNumber': 2, 'expectedResult': 30},
+    ].forEach(testCase => {
+      it(`should return the sum of rounds total before or equal the parameter round. roundNumber: ${testCase.roundNumber}`, () => {
+        // Arrange
+        let game: Game = new Game();
+        game.nbCards = 60;
+        game.players = [
+          {
+            id:'1',
+            nickname:'a'
+          },
+          {
+            id:'2',
+            nickname:'b'
+          }
+        ];
+        game.start();
+        setRoundScore(game, 0, '1', 0, 0);
+        setRoundScore(game, 1, '1', 1, 2);
+        setRoundScore(game, 2, '1', 2, 2);
+  
+        // Act
+        let res = game.getTotalForPlayer('1', testCase.roundNumber);
+  
+        // Assert
+        expect(res).toEqual(testCase.expectedResult);
+      });
+    })
+  });
 });
+
+export function setRoundScore(game: Game, roundNumber: number, playerId: string, annoucement: number | null, result: number | null) {
+  let roundScore = game.rounds[roundNumber].roundScores.get(playerId);
+  roundScore!.announcement = annoucement;
+  roundScore!.result = result;
+}
