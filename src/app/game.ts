@@ -18,7 +18,7 @@ export class Game {
         this.players = [];
         this.rounds = [];
     }
-
+    
     start() {
         if(this.players.length === 0){
             throw new Error("Cannot start a game without player");
@@ -35,9 +35,15 @@ export class Game {
             });
         }
     }
-
+    
     getPlayersId(){
         return this.players.map(p => p.id);
+    }
+
+    getTotalForPlayer(idPlayer: string, roundNumber: number): number {
+        return this.rounds.filter((r, idx) => idx <= roundNumber)
+            .map((r: Round) => r.roundScores.get(idPlayer)!.getTotal())
+            .reduce((a, b) => a + b, 0);
     }
 }
 

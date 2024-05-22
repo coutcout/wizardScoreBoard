@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { Player } from '../player';
 import { DebugElement } from '@angular/core';
 import { Round, RoundStatus } from '../round';
+import { setRoundScore } from '../game.spec';
 
 describe('ScoreBoardComponent', () => {
   let component: ScoreBoardComponent;
@@ -557,6 +558,170 @@ describe('ScoreBoardComponent', () => {
           expect(areAllInputsDisabled(inputAnnouncements)).toBeTrue();
         });
       }));
+    });
+  });
+
+  describe('Round total field', () => {
+    let game: Game;
+
+    beforeEach(() => {
+      // Arrange
+      game = new Game();
+      game.nbCards = 60;
+      game.players = [
+        {
+          id:'1',
+          nickname:'a'
+        },
+        {
+          id:'2',
+          nickname:'b'
+        }
+      ];
+      game.currentRound = 0;
+      game.start();
+      component.game = game;
+
+    });
+
+    it('should be there when announcements and results are sets', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeTruthy();
+      expect(total.nativeElement.textContent.trim()).toEqual('-10');
+
+    });
+
+    it('should not be there when announcement is empty', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', null, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeFalsy();
+    });
+
+    it('should not be there when result is empty', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, null);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeFalsy();
+    });
+  });
+
+  describe('Total field', () => {
+    let game: Game;
+
+    beforeEach(() => {
+      // Arrange
+      game = new Game();
+      game.nbCards = 60;
+      game.players = [
+        {
+          id:'1',
+          nickname:'a'
+        },
+        {
+          id:'2',
+          nickname:'b'
+        }
+      ];
+      game.currentRound = 2;
+      game.start();
+      component.game = game;
+
+    });
+
+    it('should be there on current and previous rounds', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr')).slice(0, game.currentRound + 1);
+      expect(rows).toHaveSize(game.currentRound + 1);
+
+      rows.forEach(row => {
+        let roundScore = row.queryAll(By.css('.totalSum'));
+        expect(roundScore).toHaveSize(game.players.length)
+      });
+    });
+
+    it('should not be there on unplayed rounds', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr')).slice(game.currentRound + 1);
+      expect(rows).toHaveSize(game.rounds.length - (game.currentRound + 1));
+
+      rows.forEach(row => {
+        let roundScore = row.queryAll(By.css('.totalSum'));
+        expect(roundScore).toHaveSize(0)
+      });
+    });
+
+    it('should have the sum of all previous + current total', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, 1);
+      setRoundScore(game, 1, '1', 2, 1);
+      setRoundScore(game, 2, '1', 2, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr')).slice(0, game.currentRound + 1);
+      expect(rows).toHaveSize(game.currentRound + 1);
+
+      rows.forEach((row, idx) => {
+        let roundScore = row.query(By.css('td.mat-column-1 .totalSum'));
+        expect(roundScore).toBeTruthy();
+        expect(roundScore.nativeElement.textContent.trim()).toEqual(game.getTotalForPlayer('1', idx).toString());
+      });
     });
   });
 });
