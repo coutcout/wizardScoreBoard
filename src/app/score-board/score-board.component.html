@@ -35,6 +35,9 @@
                 [(ngModel)]="element.roundScores.get(player.id).result"
                 [disabled]="element.status === RoundStatus.announcement || game.currentRound !== idx"
                 />
+            <div class="total" *ngIf="element.roundScores.get(player.id).announcement && element.roundScores.get(player.id).result">
+                {{element.roundScores.get(player.id).getTotal()}}
+            </div>
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef='getTableData()'></tr>

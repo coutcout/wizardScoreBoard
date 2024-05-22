@@ -559,7 +559,97 @@ describe('ScoreBoardComponent', () => {
       }));
     });
   });
+
+  describe('Round total field', () => {
+    let game: Game;
+
+    beforeEach(() => {
+      // Arrange
+      game = new Game();
+      game.nbCards = 60;
+      game.players = [
+        {
+          id:'1',
+          nickname:'a'
+        },
+        {
+          id:'2',
+          nickname:'b'
+        }
+      ];
+      game.currentRound = 0;
+      game.start();
+      component.game = game;
+
+    });
+
+    it('should be there when announcements and results are sets', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeTruthy();
+      console.log(total);
+      expect(total.nativeElement.textContent.trim()).toEqual('-10');
+
+    });
+
+    it('should not be there when announcement is empty', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', null, 1);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeFalsy();
+    });
+
+    it('should not be there when result is empty', () => {
+      // Arrange
+      setRoundScore(game, 0, '1', 2, null);
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      let {debugElement} = fixture;
+      let rows = debugElement.queryAll(By.css('tbody tr'));
+
+      let row = rows[0];
+      let roundScore = row.query(By.css('td.mat-column-' + '1'));
+      expect(roundScore).toBeTruthy();
+
+      let total = roundScore.query(By.css('.total'));
+      expect(total).toBeFalsy();
+    });
+  })
 });
+
+function setRoundScore(game: Game, roundNumber: number, playerId: string, annoucement: number | null, result: number | null) {
+  let roundScore = game.rounds[roundNumber].roundScores.get(playerId);
+  roundScore!.announcement = annoucement;
+  roundScore!.result = result;
+}
 
 function areAllInputsDisabled(inputs: DebugElement[]):boolean{
   return inputs
