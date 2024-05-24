@@ -38,4 +38,8 @@ export class ScoreBoardComponent {
   activateResultsPhase(round: Round){
     round.status = RoundStatus.results;
   }
+
+  selectRound(index: number){
+    this.game!.currentRound = index;
+  }
 }

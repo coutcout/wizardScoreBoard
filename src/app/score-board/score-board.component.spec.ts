@@ -216,6 +216,40 @@ describe('ScoreBoardComponent', () => {
         expect(round.nativeElement.getAttribute('class').split(' ').indexOf("invalidAnnouncement")).toEqual(-1);
       });
     }));
+
+    it('should become the current round when round column is clicked - other rounds', () => {
+      // Arrange
+      let game = new Game();
+      game.nbCards = 60;
+      game.players = [
+        {
+          id:'1',
+          nickname:'a'
+        },
+        {
+          id:'2',
+          nickname:'b'
+        }
+      ];
+      game.start();
+      game.currentRound = 2;
+      component.game = game;
+
+      fixture.detectChanges();
+      let {debugElement} = fixture;
+      let roundItems = debugElement.queryAll(By.css('tbody tr'));
+      expect(roundItems[game.currentRound].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
+      
+      // Act
+      let roundColumn = roundItems[5].query(By.css('td.mat-column-round'));
+      expect(roundColumn).toBeTruthy();
+      roundColumn.nativeElement.click();
+      fixture.detectChanges();
+
+      // Arrange
+      expect(game.currentRound).toEqual(5);
+      expect(roundItems[5].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
+    });
   
     describe('Announcement Button', () => {
       let announcementButtonDebugElement: DebugElement;
@@ -391,7 +425,6 @@ describe('ScoreBoardComponent', () => {
     });
   });
 
-  
   describe('Input fields', () => {
     let game: Game;
     let currentRound: Round;
