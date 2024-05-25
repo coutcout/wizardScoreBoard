@@ -42,4 +42,11 @@ export class ScoreBoardComponent {
   selectRound(index: number){
     this.game!.currentRound = index;
   }
+
+  selectRoundByKey(event:KeyboardEvent, index: number){
+    console.log(event);
+    if(event.key === "Enter"){
+      this.selectRound(index);
+    }
+  }
 }
