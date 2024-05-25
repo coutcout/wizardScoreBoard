@@ -44,7 +44,6 @@ export class ScoreBoardComponent {
   }
 
   selectRoundByKey(event:KeyboardEvent, index: number){
-    console.log(event);
     if(event.key === "Enter"){
       this.selectRound(index);
     }
