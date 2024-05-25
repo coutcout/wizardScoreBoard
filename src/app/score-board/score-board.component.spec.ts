@@ -217,46 +217,13 @@ describe('ScoreBoardComponent', () => {
       });
     }));
 
-    it('should become the current round when round column is clicked - other rounds', () => {
-      // Arrange
-      let game = new Game();
-      game.nbCards = 60;
-      game.players = [
-        {
-          id:'1',
-          nickname:'a'
-        },
-        {
-          id:'2',
-          nickname:'b'
-        }
-      ];
-      game.start();
-      game.currentRound = 2;
-      component.game = game;
+    describe('Round selction', () => {
+      let game: Game;
+      let roundItems: DebugElement[];
 
-      fixture.detectChanges();
-      let {debugElement} = fixture;
-      let roundItems = debugElement.queryAll(By.css('tbody tr'));
-      expect(roundItems[game.currentRound].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
-      
-      // Act
-      let roundColumn = roundItems[5].query(By.css('td.mat-column-round'));
-      expect(roundColumn).toBeTruthy();
-      roundColumn.nativeElement.click();
-      fixture.detectChanges();
-
-      // Arrange
-      expect(game.currentRound).toEqual(5);
-      expect(roundItems[5].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
-    });
-
-    [
-      "Enter"
-    ].forEach(key => {
-      fit(`should become the current round when round column is focus and '${key}' key is pressed - other rounds`, () => {
+      beforeEach(() => {
         // Arrange
-        let game = new Game();
+        game = new Game();
         game.nbCards = 60;
         game.players = [
           {
@@ -271,31 +238,52 @@ describe('ScoreBoardComponent', () => {
         game.start();
         game.currentRound = 2;
         component.game = game;
-  
+
         fixture.detectChanges();
         let {debugElement} = fixture;
-        let roundItems = debugElement.queryAll(By.css('tbody tr'));
+        roundItems = debugElement.queryAll(By.css('tbody tr'));
         expect(roundItems[game.currentRound].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
+      });
+
+      it('should become the current round when round column is clicked - other rounds', () => {
+        // Act
         let roundColumn = roundItems[5].query(By.css('td.mat-column-round'));
         expect(roundColumn).toBeTruthy();
-        
-        roundColumn.nativeElement.focus();
-        fixture.detectChanges();
-        expect(document.activeElement).toBe(roundColumn.nativeElement);
-        
-        // Act
-        
-        const event = new KeyboardEvent("keypress",{
-          "key": key // Enter
-        });
-        roundColumn.nativeElement.dispatchEvent(event);
+        roundColumn.nativeElement.click();
         fixture.detectChanges();
   
         // Arrange
         expect(game.currentRound).toEqual(5);
         expect(roundItems[5].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
       });
+  
+      [
+        "Enter"
+      ].forEach(key => {
+        fit(`should become the current round when round column is focus and '${key}' key is pressed - other rounds`, () => {
+          // Arrange
+          let roundColumn = roundItems[5].query(By.css('td.mat-column-round'));
+          expect(roundColumn).toBeTruthy();
+          
+          roundColumn.nativeElement.focus();
+          fixture.detectChanges();
+          expect(document.activeElement).toBe(roundColumn.nativeElement);
+          
+          // Act
+          
+          const event = new KeyboardEvent("keypress",{
+            "key": key // Enter
+          });
+          roundColumn.nativeElement.dispatchEvent(event);
+          fixture.detectChanges();
+    
+          // Arrange
+          expect(game.currentRound).toEqual(5);
+          expect(roundItems[5].nativeElement.getAttribute('class').split(' ').indexOf('current-round')).not.toEqual(-1);
+        });
+      });
     });
+    
   
     describe('Announcement Button', () => {
       let announcementButtonDebugElement: DebugElement;
