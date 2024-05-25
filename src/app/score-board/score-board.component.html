@@ -4,7 +4,7 @@
             <div class="mainDescription">Round</div>
             <div class="secondDescription">Number of cards</div>
         </th>
-        <td mat-cell *matCellDef="let element; let idx = index">
+        <td mat-cell *matCellDef="let element; let idx = index" (click)="selectRound(idx)" (keypress)="selectRoundByKey($event, idx)" tabindex="0">
             <div class="round">{{idx + 1}}</div>
             <div class="actions" *ngIf="game.currentRound === idx">
                 <button mat-button class="announcement" 

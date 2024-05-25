@@ -38,4 +38,14 @@ export class ScoreBoardComponent {
   activateResultsPhase(round: Round){
     round.status = RoundStatus.results;
   }
+
+  selectRound(index: number){
+    this.game!.currentRound = index;
+  }
+
+  selectRoundByKey(event:KeyboardEvent, index: number){
+    if(event.key === "Enter"){
+      this.selectRound(index);
+    }
+  }
 }
