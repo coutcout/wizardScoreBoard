@@ -260,7 +260,7 @@ describe('ScoreBoardComponent', () => {
       [
         "Enter"
       ].forEach(key => {
-        fit(`should become the current round when round column is focus and '${key}' key is pressed - other rounds`, () => {
+        it(`should become the current round when round column is focus and '${key}' key is pressed - other rounds`, () => {
           // Arrange
           let roundColumn = roundItems[5].query(By.css('td.mat-column-round'));
           expect(roundColumn).toBeTruthy();
