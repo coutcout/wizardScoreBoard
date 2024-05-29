@@ -1,0 +1,6 @@
+<h2>{{this.title}}</h2>
+<mat-dialog-content>{{this.warningText}}</mat-dialog-content>
+<mat-dialog-actions cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
+    <button mat-button class="confirm" (click)="yesButtonClick()">Yes</button>
+    <button mat-button cdkFocusInitial class="cancel" (click)="noButtonClick()">No</button>
+</mat-dialog-actions>

@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     GameNavBarComponent,
     GameBoardComponent,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
