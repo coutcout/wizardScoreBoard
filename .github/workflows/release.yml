@@ -1,12 +1,12 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Release & Deploy
 
-on: 
-  push:
-    branches:
-      - '**'
+on:
+    push:
+        tags:
+            - 'v[0-9]+.[0-9]+.[0-9]+'
   
 
 jobs:
@@ -26,23 +26,14 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: npm run build --if-present
     - run: npm run testCI
-    - name: Publish coverage results
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-results
-        path: |
-          ./coverage/wizard-score-board/
-        retention-days: 2
+    - run: npm run build --if-present --prod 
 
-    - name: Test angular action
-      uses:  demyanets/angular-coverage-badges-action@v1
+    - name: publish
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        coverage-summary-path: ./coverage/wizard-score-board/coverage-summary.json
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v4.0.1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: dist/wizard-score-board/browser/
+        server-dir: wzrdsb/
