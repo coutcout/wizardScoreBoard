@@ -62,7 +62,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}  
       run: |
         gh api -X POST /repos/coutcout/wizardScoreBoard/dispatches \
-        -f event_type='deploy' \
-        -f client_payload='{"tag": "${{ github.ref_name }}"}' 
+        -f "event_type=deploy" \
+        -f "client_payload[tag]=${{ github.ref_name }}" 
 
   
