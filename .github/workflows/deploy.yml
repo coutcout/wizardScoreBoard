@@ -19,11 +19,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}
         run: |
-          gh release download ${{ github.event.client_payload.tag }} --pattern "wsb-${{ github.event.client_payload.tag }}.zip" -R "coutcout/wizardScoreBoard"
+          gh release download ${{ github.event.client_payload.tag }} --pattern "wsb-${{ github.event.client_payload.tag }}.tgz" -R "coutcout/wizardScoreBoard"
   
       - name: Unzip asset
         run: |
-          unzip wsb-${{ github.event.client_payload.tag }}.zip
+          tar -xvf wsb-${{ github.event.client_payload.tag }}.tgz 
 
       - name: Deploy to GitHub Pages
         run: |

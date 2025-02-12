@@ -52,7 +52,7 @@ jobs:
     - run: npm run build --if-present --prod 
 
     - name: Zip build files
-      run: zip -r build-artifact-${{ github.ref_name }}.zip ./dist/wizard-score-board/browser/
+      run: tar -cvzf build-artifact-${{ github.ref_name }}.tgz -C ./dist/wizard-score-board/browser/ .
 
     - name: Create Release
       id: create_release
@@ -71,8 +71,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build-artifact-${{ github.ref_name }}.zip
-        asset_name: wsb-${{ github.ref_name }}.zip
+        asset_path: ./build-artifact-${{ github.ref_name }}.tgz
+        asset_name: wsb-${{ github.ref_name }}.tgz
         asset_content_type: application/zip
     
     - name: Trigger deployement workflow
