@@ -1,16 +1,118 @@
 @use '@angular/material' as mat;
 @import "custom";
 
-$my-primary: mat.define-palette(mat.$indigo-palette, 500);
-$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+/* For use in src/lib/core/theming/_palette.scss */
+$primary: (
+    50 : #e8eaf6,
+    100 : #c5cbe9,
+    200 : #9fa8da,
+    300 : #7985cb,
+    400 : #5c6bc0,
+    500 : #3f51b5,
+    600 : #394aae,
+    700 : #3140a5,
+    800 : #29379d,
+    900 : #1b278d,
+    A100 : #c6cbff,
+    A200 : #939dff,
+    A400 : #606eff,
+    A700 : #4757ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+$my-palette-primary: mat.define-palette($primary);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$accent: (
+    50 : #f0eaeb,
+    100 : #d9cbcc,
+    200 : #bfa8ab,
+    300 : #a58589,
+    400 : #926a6f,
+    500 : #7f5056,
+    600 : #77494f,
+    700 : #6c4045,
+    800 : #62373c,
+    900 : #4f272b,
+    A100 : #ff97a2,
+    A200 : #ff6475,
+    A400 : #ff3147,
+    A700 : #ff1830,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+$my-palette-accent: mat.define-palette($accent);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$warn: (
+    50 : #faedeb,
+    100 : #f3d3cd,
+    200 : #ebb6ac,
+    300 : #e3988a,
+    400 : #dd8271,
+    500 : #d76c58,
+    600 : #d36450,
+    700 : #cd5947,
+    800 : #c74f3d,
+    900 : #be3d2d,
+    A100 : #ffffff,
+    A200 : #ffd2cd,
+    A400 : #ffa49a,
+    A700 : #ff8d80,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$my-palette-warn: mat.define-palette($warn);
+
 
 $my-theme: mat.define-light-theme((
  color: (
-   primary: $my-primary,
-   accent: $my-accent,
+   primary: $my-palette-primary,
+   accent: $my-palette-accent,
+   warn: $my-palette-warn
  ),
  typography: mat.define-typography-config(),
  density: 0,
 ));
-
-@include mat.button-theme($my-theme);
