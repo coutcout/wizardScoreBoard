@@ -51,11 +51,29 @@ jobs:
     - run: npm run testCI
     - run: npm run build --if-present --prod 
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+    - name: Zip build files
+      run: zip -r build-artifact-${{ github.ref_name }}.zip ./dist/wizard-score-board/browser/
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}
       with:
-        name: ${{ github.ref_name }}
-        path: dist/wizard-score-board/browser/
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build-artifact-${{ github.ref_name }}.zip
+        asset_name: wsb-${{ github.ref_name }}.zip
+        asset_content_type: application/zip
     
     - name: Trigger deployement workflow
       env:

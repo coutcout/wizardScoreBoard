@@ -15,10 +15,15 @@ jobs:
           repository: coutcout/wizardSB.github.io  # Remplacez par votre nom d'utilisateur et le nom du repo B
           token: ${{ secrets.GHP_WSB_PAT }}  # Utilisez un Personal Access Token avec les permissions nécessaires
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ github.event.client_payload.tag }}
+      - name: Download release asset
+        env:
+          GH_TOKEN: ${{ secrets.GHA_LAUNCH_PAT }}
+        run: |
+          gh release download ${{ github.event.client_payload.tag }} --pattern "wsb-${{ github.event.client_payload.tag }}.zip"
+  
+      - name: Unzip asset
+        run: |
+          unzip wsb-${{ github.event.client_payload.tag }}.zip
 
       - name: Deploy to GitHub Pages
         run: |
